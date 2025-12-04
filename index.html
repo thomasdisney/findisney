@@ -4,9 +4,220 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FinDisney.com</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.25), transparent 35%),
+          radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.2), transparent 30%),
+          linear-gradient(180deg, #9bd4ff 0%, #5cb1ff 35%, #3a78d2 100%);
+        display: grid;
+        place-items: center;
+        padding: 48px 24px;
+        position: relative;
+        overflow: hidden;
+        color: #0f1e35;
+      }
+
+      .scene {
+        position: relative;
+        width: min(960px, 100%);
+        max-width: 960px;
+        aspect-ratio: 16 / 9;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.6) 40%, rgba(255, 255, 255, 0.82) 100%);
+        border-radius: 32px;
+        box-shadow: 0 25px 70px rgba(15, 30, 53, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+        overflow: hidden;
+        backdrop-filter: blur(6px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .scene::before,
+      .scene::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .scene::before {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 40%);
+      }
+
+      .scene::after {
+        background: radial-gradient(circle at 10% 80%, rgba(255, 170, 90, 0.4), transparent 35%),
+          radial-gradient(circle at 90% 85%, rgba(255, 255, 255, 0.5), transparent 25%);
+        mix-blend-mode: screen;
+      }
+
+      .content {
+        position: relative;
+        z-index: 2;
+        max-width: 480px;
+        text-align: center;
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.55);
+        border-radius: 24px;
+        box-shadow: 0 12px 40px rgba(15, 30, 53, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(8px);
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: clamp(2.5rem, 3vw + 1rem, 3.5rem);
+        letter-spacing: -0.02em;
+      }
+
+      p {
+        margin: 0;
+        font-size: clamp(1.1rem, 1vw + 0.8rem, 1.35rem);
+        opacity: 0.85;
+      }
+
+      .parachute {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        pointer-events: none;
+      }
+
+      .parachute svg {
+        width: min(420px, 40vw);
+        filter: drop-shadow(0 18px 28px rgba(15, 30, 53, 0.25));
+      }
+
+      .terrain {
+        position: absolute;
+        bottom: -10%;
+        left: 0;
+        right: 0;
+        height: 38%;
+        background: linear-gradient(180deg, rgba(60, 126, 77, 0.95) 0%, #1f5b3b 75%);
+        clip-path: polygon(0 60%, 18% 40%, 35% 55%, 52% 32%, 66% 48%, 82% 36%, 100% 55%, 100% 100%, 0 100%);
+      }
+
+      .clouds {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .cloud {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.9);
+        filter: blur(0.2px);
+        border-radius: 50%;
+        box-shadow: 40px 10px 0 8px rgba(255, 255, 255, 0.92), 80px 18px 0 12px rgba(255, 255, 255, 0.85), 30px 25px 0 14px rgba(255, 255, 255, 0.88);
+        animation: drift 18s ease-in-out infinite alternate;
+      }
+
+      .cloud:nth-child(1) {
+        width: 110px;
+        height: 68px;
+        top: 14%;
+        left: 12%;
+        animation-delay: -2s;
+      }
+
+      .cloud:nth-child(2) {
+        width: 140px;
+        height: 78px;
+        top: 26%;
+        right: 10%;
+        animation-delay: -5s;
+      }
+
+      .cloud:nth-child(3) {
+        width: 90px;
+        height: 56px;
+        top: 48%;
+        left: 24%;
+        animation-delay: -8s;
+      }
+
+      @keyframes drift {
+        from {
+          transform: translateX(0px) translateY(0px);
+        }
+        to {
+          transform: translateX(24px) translateY(-6px);
+        }
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 24px 16px;
+        }
+
+        .scene {
+          aspect-ratio: 4 / 5;
+        }
+
+        .parachute svg {
+          width: 260px;
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1>Fin Disney</h1>
-    <p>1 year old explorer</p>
+    <div class="scene">
+      <div class="clouds">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+      </div>
+      <div class="parachute" aria-hidden="true">
+        <svg viewBox="0 0 400 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
+          <defs>
+            <linearGradient id="canopy" x1="0" y1="0" x2="400" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#ffb347" />
+              <stop offset="0.5" stop-color="#ff6b6b" />
+              <stop offset="1" stop-color="#7c5cff" />
+            </linearGradient>
+            <linearGradient id="harness" x1="200" y1="180" x2="200" y2="320" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#0f1e35" />
+              <stop offset="1" stop-color="#143b56" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M200 26c-60 0-116 52-136 142.5-1.6 7.2 2.2 14.3 8.9 16.9l118.8 46.4c5.1 2 10.8 2 15.9 0l118.8-46.4c6.7-2.6 10.5-9.7 8.9-16.9C316 78 260 26 200 26Z"
+            fill="url(#canopy)"
+          />
+          <path d="M200 232 88 186" stroke="#0f1e35" stroke-width="6" stroke-linecap="round" />
+          <path d="m200 232 112-46" stroke="#0f1e35" stroke-width="6" stroke-linecap="round" />
+          <path d="m140 184 60 48 60-48" stroke="#0f1e35" stroke-width="6" stroke-linecap="round" />
+          <path
+            d="M200 232c-22 0-44 18-44 44 0 24 20.6 44 44 44s44-20 44-44c0-26-22-44-44-44Z"
+            fill="url(#harness)"
+            stroke="#0f1e35"
+            stroke-width="6"
+          />
+          <circle cx="200" cy="220" r="18" fill="#f4f7fb" stroke="#0f1e35" stroke-width="6" />
+        </svg>
+      </div>
+      <div class="terrain"></div>
+      <div class="content">
+        <h1>Fin Disney</h1>
+        <p>1 year old explorer</p>
+      </div>
+    </div>
   </body>
 </html>
